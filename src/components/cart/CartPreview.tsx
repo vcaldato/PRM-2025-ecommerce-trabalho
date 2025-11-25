@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/utils/format";
 
@@ -92,13 +93,22 @@ export const CartPreview = ({ onClose }: CartPreviewProps) => {
         <span className="text-sm text-muted-foreground">Total</span>
         <strong className="text-lg">{formatPrice(totalPrice)}</strong>
       </div>
-      <button
-        type="button"
-        onClick={onClose}
-        className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-      >
-        Continuar comprando
-      </button>
+      <div className="flex gap-2">
+        <Link
+          to="/checkout"
+          onClick={onClose}
+          className="flex-1 rounded-xl bg-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+        >
+          Finalizar
+        </Link>
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded-xl border px-4 py-2 text-sm font-semibold transition hover:border-primary"
+        >
+          Continuar
+        </button>
+      </div>
     </div>
   );
 };
