@@ -8,6 +8,7 @@ import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { CheckoutPage } from "@/pages/CheckoutPage";
+import { OrdersHistoryPage } from "@/pages/OrdersHistoryPage";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PublicRoute } from "@/components/auth/PublicRoute";
 
@@ -57,6 +58,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pedidos"
+            element={
+              <ProtectedRoute>
+                <OrdersHistoryPage />
               </ProtectedRoute>
             }
           />

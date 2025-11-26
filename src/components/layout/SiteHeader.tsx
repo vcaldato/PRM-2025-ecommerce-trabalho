@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, LogOut, User } from "lucide-react";
+import { ShoppingCart, LogOut, User, Package } from "lucide-react";
 import { useCart } from "@/store/cart";
 import { CartPreview } from "@/components/cart/CartPreview";
 import { useAuth } from "@/hooks/useAuth";
@@ -37,6 +37,13 @@ export const SiteHeader = () => {
         <div className="flex items-center gap-4">
           {isAuthenticated ? (
             <>
+              <Link
+                to="/pedidos"
+                className="flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition hover:border-primary"
+              >
+                <Package className="h-4 w-4" />
+                Meus Pedidos
+              </Link>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <User className="h-4 w-4" />
                 <span>{user?.user_metadata?.name || user?.email}</span>

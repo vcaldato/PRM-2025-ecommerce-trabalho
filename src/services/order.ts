@@ -40,5 +40,12 @@ export const orderService = {
     const { data } = await api.get<Order[]>(`/orders/customer/${customerId}`);
     return data;
   },
+
+  async updateStatus(orderId: string, status: string): Promise<Order> {
+    const { data } = await api.patch<Order>(`/orders/${orderId}/status`, {
+      status,
+    });
+    return data;
+  },
 };
 
