@@ -7,7 +7,6 @@ import { formatPrice } from "@/utils/format";
 import {
   formatOrderStatus,
   getStatusColor,
-  getNextStatus,
   getAllStatuses,
 } from "@/utils/orderStatus";
 import { formatDate } from "@/utils/date";
