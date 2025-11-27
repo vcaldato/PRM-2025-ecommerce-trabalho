@@ -43,13 +43,7 @@ export const CartPreview = ({ onClose }: CartPreviewProps) => {
             key={item.id}
             className="flex gap-3 rounded-xl border p-2 transition hover:border-primary"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-lg bg-muted">
-              <img
-                src={item.imageUrl || `https://picsum.photos/seed/${item.id}/80`}
-                alt={item.name}
-                className="h-full w-full object-cover"
-              />
-            </div>
+            <div className="h-16 w-16 bg-black rounded-lg flex-shrink-0"></div>
             <div className="flex flex-1 flex-col text-sm">
               <strong className="font-semibold leading-tight">
                 {item.name}

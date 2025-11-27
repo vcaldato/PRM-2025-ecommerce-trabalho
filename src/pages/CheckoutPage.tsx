@@ -81,16 +81,7 @@ export const CheckoutPage = () => {
                   key={item.id}
                   className="flex items-center gap-4 border-b pb-4"
                 >
-                  <div className="h-20 w-20 overflow-hidden rounded-lg bg-muted">
-                    <img
-                      src={
-                        item.imageUrl ||
-                        `https://picsum.photos/seed/${item.id}/80`
-                      }
-                      alt={item.name}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
+                  <div className="h-20 w-20 bg-black rounded-lg flex-shrink-0"></div>
                   <div className="flex flex-1 flex-col gap-2">
                     <div className="flex items-start justify-between">
                       <div>

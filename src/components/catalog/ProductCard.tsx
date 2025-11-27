@@ -3,17 +3,16 @@ import { toast } from "react-toastify";
 import type { Product } from "@/types/product";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/utils/format";
+import { FavoriteButton } from "./FavoriteButton";
+import { useAuth } from "@/hooks/useAuth";
 
 interface ProductCardProps {
   product: Product;
 }
 
-const fallbackImage = (id: string) =>
-  `https://picsum.photos/seed/${id}/400/400`;
-
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { addItem } = useCart();
-  const imageSrc = product.imageUrl || fallbackImage(product.id);
+  const { isAuthenticated } = useAuth();
 
   const handleAddToCart = () => {
     addItem(product);
@@ -22,13 +21,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-      <div className="relative h-48 w-full overflow-hidden bg-muted">
-        <img
-          src={imageSrc}
-          alt={product.name}
-          loading="lazy"
-          className="h-full w-full object-cover"
-        />
+      <div className="relative h-48 w-full bg-black">
+        {isAuthenticated && (
+          <div className="absolute right-2 top-2">
+            <FavoriteButton productId={product.id} />
+          </div>
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
         <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">

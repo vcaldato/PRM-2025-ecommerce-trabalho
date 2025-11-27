@@ -3,15 +3,16 @@ import { toast } from "react-toastify";
 import { useProductDetail } from "@/hooks/useProductDetail";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/utils/format";
-
-const fallbackImage = (id: string) =>
-  `https://picsum.photos/seed/${id}/640/480`;
+import { FavoriteButton } from "@/components/catalog/FavoriteButton";
+import { useAuth } from "@/hooks/useAuth";
+import { ProductReviews } from "@/components/reviews/ProductReviews";
 
 export const ProductDetailPage = () => {
   const { id } = useParams();
   const productId = id ?? "";
   const { data: product, isLoading, isError } = useProductDetail(productId);
   const { addItem } = useCart();
+  const { isAuthenticated } = useAuth();
 
   if (isLoading) {
     return (
@@ -42,8 +43,6 @@ export const ProductDetailPage = () => {
     toast.success("Produto adicionado ao carrinho");
   };
 
-  const imageSrc = product.imageUrl || fallbackImage(product.id);
-
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
       <Link
@@ -53,17 +52,22 @@ export const ProductDetailPage = () => {
         Voltar para o catálogo
       </Link>
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-3xl border bg-white shadow-sm">
-          <img
-            src={imageSrc}
-            alt={product.name}
-            className="h-full w-full object-cover"
-          />
+        <div className="relative overflow-hidden rounded-3xl border bg-black shadow-sm">
+          {isAuthenticated && (
+            <div className="absolute right-4 top-4">
+              <FavoriteButton productId={product.id} />
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-4 rounded-3xl border bg-white p-6 shadow-sm">
-          <span className="text-xs uppercase text-muted-foreground">
-            {product.category?.name}
-          </span>
+          <div className="flex items-start justify-between">
+            <span className="text-xs uppercase text-muted-foreground">
+              {product.category?.name}
+            </span>
+            {isAuthenticated && (
+              <FavoriteButton productId={product.id} className="mt-1" />
+            )}
+          </div>
           <h1 className="text-3xl font-semibold">{product.name}</h1>
           <p className="text-sm text-muted-foreground">
             {product.description || "Este produto ainda não possui descrição."}
@@ -87,6 +91,9 @@ export const ProductDetailPage = () => {
             Adicionar ao carrinho
           </button>
         </div>
+      </div>
+      <div className="mt-10">
+        <ProductReviews productId={productId} />
       </div>
     </div>
   );
