@@ -8,6 +8,7 @@ import {
 import type { CartItem } from "@/types/cart";
 import type { Product } from "@/types/product";
 import { CartContext, type CartContextValue } from "./cart-context";
+import { getProductImage } from "@/utils/productImages";
 
 const storageKey = "ecommerce_cart_items";
 
@@ -38,7 +39,7 @@ const buildItem = (product: Product, quantity: number): CartItem => ({
   name: product.name,
   price: product.price,
   quantity,
-  imageUrl: product.imageUrl,
+  imageUrl: product.imageUrl || getProductImage(product.name),
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {

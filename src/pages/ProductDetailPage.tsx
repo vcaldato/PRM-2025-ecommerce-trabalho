@@ -6,6 +6,7 @@ import { formatPrice } from "@/utils/format";
 import { FavoriteButton } from "@/components/catalog/FavoriteButton";
 import { useAuth } from "@/hooks/useAuth";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
+import { getProductImage } from "@/utils/productImages";
 
 export const ProductDetailPage = () => {
   const { id } = useParams();
@@ -43,6 +44,8 @@ export const ProductDetailPage = () => {
     toast.success("Produto adicionado ao carrinho");
   };
 
+  const productImage = product.imageUrl || getProductImage(product.name);
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
       <Link
@@ -52,7 +55,14 @@ export const ProductDetailPage = () => {
         Voltar para o catálogo
       </Link>
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
-        <div className="relative overflow-hidden rounded-3xl border bg-black shadow-sm">
+        <div className="relative overflow-hidden rounded-3xl border bg-black shadow-sm flex items-center justify-center min-h-[400px]">
+          {productImage ? (
+            <img
+              src={productImage}
+              alt={product.name}
+              className="max-h-full max-w-full object-contain"
+            />
+          ) : null}
           {isAuthenticated && (
             <div className="absolute right-4 top-4">
               <FavoriteButton productId={product.id} />

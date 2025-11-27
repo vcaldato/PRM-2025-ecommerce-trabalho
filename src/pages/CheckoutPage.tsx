@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { customerService } from "@/services/customer";
 import { orderService } from "@/services/order";
 import { formatPrice } from "@/utils/format";
+import { getProductImage } from "@/utils/productImages";
 
 export const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -76,13 +77,23 @@ export const CheckoutPage = () => {
           <div className="rounded-2xl border bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-semibold">Resumo do Pedido</h2>
             <div className="space-y-4">
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center gap-4 border-b pb-4"
-                >
-                  <div className="h-20 w-20 bg-black rounded-lg flex-shrink-0"></div>
-                  <div className="flex flex-1 flex-col gap-2">
+              {items.map((item) => {
+                const itemImage = item.imageUrl || getProductImage(item.name);
+                return (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-4 border-b pb-4"
+                  >
+                    <div className="h-20 w-20 bg-black rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center">
+                      {itemImage && (
+                        <img
+                          src={itemImage}
+                          alt={item.name}
+                          className="max-h-full max-w-full object-contain"
+                        />
+                      )}
+                    </div>
+                    <div className="flex flex-1 flex-col gap-2">
                     <div className="flex items-start justify-between">
                       <div>
                         <p className="font-medium">{item.name}</p>
@@ -132,7 +143,8 @@ export const CheckoutPage = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

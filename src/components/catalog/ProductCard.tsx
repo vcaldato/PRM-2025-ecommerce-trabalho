@@ -5,6 +5,7 @@ import { useCart } from "@/store/cart";
 import { formatPrice } from "@/utils/format";
 import { FavoriteButton } from "./FavoriteButton";
 import { useAuth } from "@/hooks/useAuth";
+import { getProductImage } from "@/utils/productImages";
 
 interface ProductCardProps {
   product: Product;
@@ -13,6 +14,7 @@ interface ProductCardProps {
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { addItem } = useCart();
   const { isAuthenticated } = useAuth();
+  const productImage = product.imageUrl || getProductImage(product.name);
 
   const handleAddToCart = () => {
     addItem(product);
@@ -21,7 +23,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-      <div className="relative h-48 w-full bg-black">
+      <div className="relative h-48 w-full bg-black overflow-hidden">
+        {productImage ? (
+          <img
+            src={productImage}
+            alt={product.name}
+            className="h-full w-full object-contain"
+          />
+        ) : null}
         {isAuthenticated && (
           <div className="absolute right-2 top-2">
             <FavoriteButton productId={product.id} />

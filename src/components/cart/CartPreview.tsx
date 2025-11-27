@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/utils/format";
+import { getProductImage } from "@/utils/productImages";
 
 interface CartPreviewProps {
   onClose?: () => void;
@@ -38,13 +39,23 @@ export const CartPreview = ({ onClose }: CartPreviewProps) => {
         </button>
       </div>
       <div className="flex max-h-60 flex-col gap-3 overflow-y-auto pr-1">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="flex gap-3 rounded-xl border p-2 transition hover:border-primary"
-          >
-            <div className="h-16 w-16 bg-black rounded-lg flex-shrink-0"></div>
-            <div className="flex flex-1 flex-col text-sm">
+        {items.map((item) => {
+          const itemImage = item.imageUrl || getProductImage(item.name);
+          return (
+            <div
+              key={item.id}
+              className="flex gap-3 rounded-xl border p-2 transition hover:border-primary"
+            >
+              <div className="h-16 w-16 bg-black rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center">
+                {itemImage && (
+                  <img
+                    src={itemImage}
+                    alt={item.name}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                )}
+              </div>
+              <div className="flex flex-1 flex-col text-sm">
               <strong className="font-semibold leading-tight">
                 {item.name}
               </strong>
@@ -81,7 +92,8 @@ export const CartPreview = ({ onClose }: CartPreviewProps) => {
               </div>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
       <div className="flex items-center justify-between">
         <span className="text-sm text-muted-foreground">Total</span>
